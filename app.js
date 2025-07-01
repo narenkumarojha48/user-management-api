@@ -1,27 +1,32 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import dotEnv from 'dotenv';
+dotEnv.config();
+// import {setDefaultResultOrder} from "dns";
+// setDefaultResultOrder('ipv4first');
 import {connectDB} from './src/config/dbConn.js';
 import userRoutes from './src/routes/index.route.js';
-dotEnv.config();
+
 // const url = "mongodb://localhost:27017"
-const url = "mongodb+srv://narender:narender@cluster0.nod5bli.mongodb.net/BayerDB?retryWrites=true&w=majority&appName=Cluster0"
+// const url = "mongodb+srv://narender:narender@cluster0.nod5bli.mongodb.net/BayerDB?retryWrites=true&w=majority&appName=Cluster0"
 // const url = "mongodb+srv://narenkumarojha48:Internet%232@cluster0.nod5bli.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=Cluster0"
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-connectDB()
+connectDB();
 
-import { loginController } from './src/controllers/loginController.js';
+import { loginController } from './src/controllers/logincontroller.js';
 import { userListController } from './src/controllers/userlistcontroller.js';
 import { registerController } from './src/controllers/registercontroller.js';
 // app.get("/login",(req,res)=>{
 //   res.send("Login Page");
 // })
 app.use("/api/v1",userRoutes);
+app.get("/",(req,res)=>{
+  res.json({mesage:"Api is started"})
+})
 app.post("/login",loginController);
 app.post("/register",registerController);
 app.get("/getUser",userListController);
@@ -31,7 +36,7 @@ app.use((err,req,res,next)=>{
   if(err.name === 'ValidationError'){
     const formattedErrors = {}
     for(let field in err.errors){
-      formattedErrors[field] = err.errors[field].message
+      formattedErrors[field] = err.errors[field].message;
     }
     return res.status(400).json({errors:formattedErrors})
   }

@@ -6,12 +6,12 @@ export const createUserController = async(req,res,next)=>{
   try {
     //  const isValidUser = validateUser(req?.body);
     // const user = new UserModel();
-    const userExists= await UserModel.findOne({email:req?.body?.email});
+    const userExists = await UserModel.findOne({email:req?.body?.email});
     // if(userExists){
     //     throw createHttpError(400,"User with this email already registered");
     // }
     const newuser = new UserModel(req?.body);
-    const user = await newuser.save()
+    const user = await newuser.save();
     // const user = await UserModel.insertOne(req?.body);
      console.log(userExists)
     //  if (Object.keys(isValidUser).length === 0) {
