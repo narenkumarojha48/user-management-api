@@ -11,7 +11,7 @@ import userRoutes from './src/routes/index.route.js';
 // const url = "mongodb+srv://narender:narender@cluster0.nod5bli.mongodb.net/BayerDB?retryWrites=true&w=majority&appName=Cluster0"
 // const url = "mongodb+srv://narenkumarojha48:Internet%232@cluster0.nod5bli.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=Cluster0"
 const app = express();
-
+let port = process.env.PORT || 5000
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -64,7 +64,7 @@ app.use((err,req,res,next)=>{
 })
 
 
-app.listen(4000, () => {
+app.listen(port, () => {
   console.log('Server is running on http://localhost:4000');
 })
 
